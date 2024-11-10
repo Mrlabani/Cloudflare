@@ -6,7 +6,7 @@ from flask import Flask, request
 # Configurations
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")  # Use environment variable for bot token
 CLOUDFLARE_WORKER_URL = os.getenv("CLOUDFLARE_WORKER_URL")  # Cloudflare Worker endpoint
-ADMIN_ID = 123456789  # Replace with your Telegram user ID
+ADMIN_ID = 6742022802  # Replace with your Telegram user ID
 
 # Initialize bot and Flask app
 bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
