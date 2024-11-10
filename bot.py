@@ -23,7 +23,7 @@ EMOJI = {
     "cogs": "⚙️"
 }
 
-# Commands
+# Flask route to handle incoming Telegram updates
 @app.route('/webhook', methods=['POST'])
 def webhook():
     json_str = request.get_data().decode('UTF-8')
@@ -31,6 +31,7 @@ def webhook():
     bot.process_new_updates([update])
     return '', 200
 
+# Commands
 @bot.message_handler(commands=['start'])
 def start_command(message):
     welcome_text = f"""
@@ -99,16 +100,14 @@ def change_model_command(message):
     })
     bot.reply_to(message, f"{EMOJI['success']} Model changed to: *{model_path}*", parse_mode="Markdown")
 
-# Flask route to handle webhook (if needed)
+# Flask handler to invoke webhook
 @app.route('/')
 def index():
     return "Bot is running!"
 
-# Flask handler to invoke polling (on serverless deployment)
+# Start Flask app for serverless function
 def main():
-    bot.remove_webhook()
-    bot.polling(non_stop=True)
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
 
 if __name__ == "__main__":
     main()
-                     
